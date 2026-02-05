@@ -1,0 +1,10 @@
+# Archivos de estado de Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+*.tfvars
+*.tfvars.json
+
+# Variables de entorno y llaves
+.env
+*.json
