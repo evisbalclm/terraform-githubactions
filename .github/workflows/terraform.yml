@@ -1,0 +1,35 @@
+name: 'Terraform GCP'
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  id-token: write # Vital para que funcione Workload Identity Federation
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Este es el paso "mágico" que usa tu WIF
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: 'projects/908155441022/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+        service_account: 'github-actions-sa@project-271e1e87-2307-44b8-a02.iam.gserviceaccount.com'
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan
+      run: terraform plan
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
