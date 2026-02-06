@@ -2,6 +2,12 @@ resource "google_compute_instance" "vm_free_tier" {
   name         = "instancia-linux-privada"
   machine_type = "e2-micro" # Tipo de máquina de capa gratuita
   zone         = "us-central1-a" # Importante: Debe ser una zona de US para ser gratis
+  
+  service_account {
+    # El scope "cloud-platform" permite que la VM use los permisos 
+    # de IAM que le asignes más tarde.
+    scopes = ["cloud-platform"]
+  }
 
   boot_disk {
     initialize_params {
