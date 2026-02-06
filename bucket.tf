@@ -9,6 +9,6 @@ resource "google_storage_bucket" "mi_bucket_destino" {
 resource "google_storage_bucket_iam_member" "permiso_vm_bucket" {
   bucket = google_storage_bucket.mi_bucket_destino.name
   role   = "roles/storage.objectAdmin"
-  member = "github-actions-sa@project-271e1e87-2307-44b8-a02.iam.gserviceaccount.com" 
+  member = "serviceAccount:github-actions-sa@project-271e1e87-2307-44b8-a02.iam.gserviceaccount.com" 
   # Nota: Verifica en tu consola que ese sea el correo de tu "Compute Engine default service account"
 }
